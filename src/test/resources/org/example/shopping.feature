@@ -9,7 +9,7 @@ Feature: Shopping
     When the 'LoginButton' is clicked
     Then user redirected to 'https://demowebshop.tricentis.com/'
 
-  Scenario: Adding a stuff to cart
+  Scenario: Adding a Jewelery to cart
     Given the 'JeweleryLink' is clicked
     And user redirected to 'https://demowebshop.tricentis.com/jewelry'
     When the 'Diamond Heart' is added to the cart

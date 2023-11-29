@@ -5,6 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.Map;
 
 public class HomePage {
@@ -30,11 +34,15 @@ public class HomePage {
     @FindBy(xpath = "/html/body/div[4]/div[1]/div[1]/div[2]/div[1]/ul/li[2]/a")
     WebElement LoginLabel;
 
+    @FindBy(xpath = "//*[@id=\"newsletter-result-block\"]")
+    WebElement NewspaperSuccess;
+
     public static final Map<String, By> navigationButtons = Map.ofEntries(
             Map.entry("LoginLink", By.xpath("/html/body/div[4]/div[1]/div[1]/div[2]/div[1]/ul/li[2]/a")),
             Map.entry("LoginButton", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div/div[2]/div[1]/div[2]/div[2]/form/div[5]/input")),
             Map.entry("JeweleryLink", By.xpath("/html/body/div[4]/div[1]/div[2]/ul[1]/li[6]/a")),
             Map.entry("ClothLink", By.xpath("/html/body/div[4]/div[1]/div[2]/ul[1]/li[4]/a")),
+            Map.entry("BookLink", By.xpath("/html/body/div[4]/div[1]/div[2]/ul[1]/li[1]/a")),
             Map.entry("CartLink", By.xpath("//*[@id=\"topcartlink\"]/a")),
             Map.entry("UpdateCartButton", By.xpath("/html/body/div[4]/div[1]/div[4]/div/div/div[2]/div/form/div[1]/div/input[1]")),
             Map.entry("Logout", By.xpath("/html/body/div[4]/div[1]/div[1]/div[2]/div[1]/ul/li[2]/a")),
@@ -53,7 +61,8 @@ public class HomePage {
             "Diamond Heart", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[2]/div/div[2]/div[3]/div[2]/input"),
             "Casual Belt", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[4]/div/div[2]/div[3]/div[2]/input"),
             "Jeans", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[3]/div/div[2]/div[3]/div[2]/input"),
-            "Handbag", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[7]/div/div[2]/div[3]/div[2]/input")
+            "Handbag", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[7]/div/div[2]/div[3]/div[2]/input"),
+            "Fiction", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[3]/div/div[2]/div[3]/div[2]/input")
     );
 
 
@@ -83,6 +92,7 @@ public class HomePage {
     public String getSubtotal() { return Subtotal.getText(); }
     public String getSuccessMessage() { return SuccessMessage.getText(); }
     public String getLoginLabel() { return LoginLabel.getText(); }
+    public String getNewspaperMessage() { return NewspaperSuccess.getText(); }
 
     public String getPageUrl(){return driver.getCurrentUrl();}
 
@@ -92,5 +102,35 @@ public class HomePage {
 
     public void addItemToCart(String item) {
         driver.findElement(itemButtons.get(item)).click();
+    }
+
+    public void fillAndSubmitFormWithEmail(String email) {
+        WebElement emailInput = driver.findElement(By.xpath("//*[@id=\"newsletter-email\"]"));
+        emailInput.sendKeys(email);
+
+        WebElement submitButton = driver.findElement(By.xpath("//*[@id=\"newsletter-subscribe-button\"]"));
+        submitButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        By successMessageLocator = By.xpath("//*[@id=\"newsletter-result-block\"]");
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(successMessageLocator));
+
+        String actualMessage = getNewspaperMessage();
+        String expectedMessage = "Thank you for signing up! A verification email has been sent. We appreciate your interest.";
+    }
+
+    public void fillAndSubmitFormWithWrongEmail(String email) {
+        WebElement emailInput = driver.findElement(By.xpath("//*[@id=\"newsletter-email\"]"));
+        emailInput.sendKeys(email);
+
+        WebElement submitButton = driver.findElement(By.xpath("//*[@id=\"newsletter-subscribe-button\"]"));
+        submitButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        By MessageLocator = By.xpath("//*[@id=\"newsletter-result-block\"]");
+        WebElement message = wait.until(ExpectedConditions.visibilityOfElementLocated(MessageLocator));
+
+        String actualMessage = getNewspaperMessage();
+        String expectedMessage = "Enter valid email";
     }
 }
