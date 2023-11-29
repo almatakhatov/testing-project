@@ -25,3 +25,26 @@ Feature: Shopping
     Then the 'Your Shopping Cart is empty!' is shown
     And the 'Logout' is clicked
 
+  Scenario Outline: Buying an item
+    Given the '<category>' is clicked
+    And user redirected to '<link>'
+    And the '<item>' is added to the cart
+    And the 'CartLink' is clicked
+    And user redirected to 'https://demowebshop.tricentis.com/cart'
+    And the sum '<sum>' is shown
+    And the 'TermsOfUseCheckbox' is clicked
+    And the 'CheckoutButton' is clicked
+    And the 'BillAddressContinueButton' is clicked
+    And the 'ShipAddressContinueButton' is clicked
+    And the 'ShipMethodContinueButton' is clicked
+    And the 'PayMethodContinueButton' is clicked
+    And the 'PayInfoContinueButton' is clicked
+    When the 'ConfirmButton' is clicked
+    Then the message 'Your order has been successfully processed!' is shown
+    And the 'Logout' is clicked
+    Examples:
+      | item          | category     | link                                            | sum    |
+      | Casual Belt   | ClothLink    | https://demowebshop.tricentis.com/apparel-shoes | 1.00   |
+      | Jeans         | ClothLink    | https://demowebshop.tricentis.com/apparel-shoes | 1.00   |
+      | Handbag       | ClothLink    | https://demowebshop.tricentis.com/apparel-shoes | 35.00  |
+      | Diamond Heart | JeweleryLink | https://demowebshop.tricentis.com/jewelry       | 130.00 |

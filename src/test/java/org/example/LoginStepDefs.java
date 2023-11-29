@@ -9,4 +9,7 @@ public class LoginStepDefs extends AbstractStepDefs {
         assertEquals(errorMessage1, homePage.getOutputMessage1());
         assertEquals(errorMessage2, homePage.getOutputMessage2());
     }
+
+    @Then("the {string} is visible")
+    public void LoginIsVisible(String label) { assertEquals(label, homePage.getLoginLabel());}
 }

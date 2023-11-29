@@ -21,18 +21,39 @@ public class HomePage {
     @FindBy(xpath = "/html/body/div[4]/div[1]/div[4]/div/div[2]/div[2]/div")
     WebElement emptyCartMessage;
 
+    @FindBy(xpath = "/html/body/div[4]/div[1]/div[4]/div/div/div[2]/div/form/div[2]/div[2]/div[1]/table/tbody/tr[1]/td[2]/span/span")
+    WebElement Subtotal;
+
+    @FindBy(xpath = "/html/body/div[4]/div[1]/div[4]/div/div/div[2]/div/div[1]/strong")
+    WebElement SuccessMessage;
+
+    @FindBy(xpath = "/html/body/div[4]/div[1]/div[1]/div[2]/div[1]/ul/li[2]/a")
+    WebElement LoginLabel;
+
     public static final Map<String, By> navigationButtons = Map.ofEntries(
             Map.entry("LoginLink", By.xpath("/html/body/div[4]/div[1]/div[1]/div[2]/div[1]/ul/li[2]/a")),
             Map.entry("LoginButton", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div/div[2]/div[1]/div[2]/div[2]/form/div[5]/input")),
             Map.entry("JeweleryLink", By.xpath("/html/body/div[4]/div[1]/div[2]/ul[1]/li[6]/a")),
+            Map.entry("ClothLink", By.xpath("/html/body/div[4]/div[1]/div[2]/ul[1]/li[4]/a")),
             Map.entry("CartLink", By.xpath("//*[@id=\"topcartlink\"]/a")),
             Map.entry("UpdateCartButton", By.xpath("/html/body/div[4]/div[1]/div[4]/div/div/div[2]/div/form/div[1]/div/input[1]")),
             Map.entry("Logout", By.xpath("/html/body/div[4]/div[1]/div[1]/div[2]/div[1]/ul/li[2]/a")),
-            Map.entry("Checkbox", By.xpath("/html/body/div[4]/div[1]/div[4]/div/div/div[2]/div/form/table/tbody/tr/td[1]/input"))
+            Map.entry("Checkbox", By.xpath("/html/body/div[4]/div[1]/div[4]/div/div/div[2]/div/form/table/tbody/tr/td[1]/input")),
+            Map.entry("TermsOfUseCheckbox", By.xpath("//*[@id=\"termsofservice\"]")),
+            Map.entry("CheckoutButton", By.xpath("//*[@id=\"checkout\"]")),
+            Map.entry("BillAddressContinueButton", By.xpath("//*[@id=\"billing-buttons-container\"]/input")),
+            Map.entry("ShipAddressContinueButton", By.xpath("//*[@id=\"shipping-buttons-container\"]/input")),
+            Map.entry("ShipMethodContinueButton", By.xpath("//*[@id=\"shipping-method-buttons-container\"]/input")),
+            Map.entry("PayMethodContinueButton", By.xpath("//*[@id=\"payment-method-buttons-container\"]/input")),
+            Map.entry("PayInfoContinueButton", By.xpath("//*[@id=\"payment-info-buttons-container\"]/input")),
+            Map.entry("ConfirmButton", By.xpath("//*[@id=\"confirm-order-buttons-container\"]/input"))
     );
 
     private static final Map<String, By> itemButtons = Map.of(
-            "Diamond Heart", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[2]/div/div[2]/div[3]/div[2]/input")
+            "Diamond Heart", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[2]/div/div[2]/div[3]/div[2]/input"),
+            "Casual Belt", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[4]/div/div[2]/div[3]/div[2]/input"),
+            "Jeans", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[3]/div/div[2]/div[3]/div[2]/input"),
+            "Handbag", By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div[2]/div[2]/div[3]/div[7]/div/div[2]/div[3]/div[2]/input")
     );
 
 
@@ -59,6 +80,10 @@ public class HomePage {
         return outputMessage2.getText();
     }
     public String getEmptyCartMessage() { return emptyCartMessage.getText(); }
+    public String getSubtotal() { return Subtotal.getText(); }
+    public String getSuccessMessage() { return SuccessMessage.getText(); }
+    public String getLoginLabel() { return LoginLabel.getText(); }
+
     public String getPageUrl(){return driver.getCurrentUrl();}
 
     public void clickButton(String button){driver.findElement(navigationButtons.get(button)).click();}

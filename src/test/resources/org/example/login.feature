@@ -18,11 +18,23 @@ Feature: Login
       |                   | nightcall | Login was unsuccessful. Please correct the errors and try again. | No customer account found              |
 
 
-  Scenario: Correct logging in and out
+  Scenario: Correct logging in
     Given the 'LoginLink' is clicked
     And user redirected to 'https://demowebshop.tricentis.com/login'
     And the 'email' is filled with 'i.drive@gmail.com'
     And the 'password' is filled with 'nightcall'
     When the 'LoginButton' is clicked
     Then user redirected to 'https://demowebshop.tricentis.com/'
+    And the 'Logout' is clicked
+
+  Scenario: Logging out
+    Given the 'LoginLink' is clicked
+    And user redirected to 'https://demowebshop.tricentis.com/login'
+    And the 'email' is filled with 'i.drive@gmail.com'
+    And the 'password' is filled with 'nightcall'
+    And the 'LoginButton' is clicked
+    And user redirected to 'https://demowebshop.tricentis.com/'
+    When the 'Logout' is clicked
+    Then the 'Log in' is visible
+
 

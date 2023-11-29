@@ -1,5 +1,6 @@
 package org.example;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -15,4 +16,10 @@ public class ShoppingStepDefs extends AbstractStepDefs {
 
     @Then("the {string} is shown")
     public void theYourShoppingCartIsEmptyIsShown(String text) { assertEquals(text, homePage.getEmptyCartMessage()); }
+
+   @And("the sum {string} is shown")
+   public void theSumIsShown(String amount) { assertEquals(amount, homePage.getSubtotal()); }
+
+   @And("the message {string} is shown")
+   public void theSuccessMessageIsShown(String message) { assertEquals(message, homePage.getSuccessMessage()); }
 }
